@@ -37,7 +37,7 @@
         }
       },
       progress (event) {
-        this.drawing = event ? 'Drawing...' : ''
+        this.drawing = event ? 'Drawing...' : '[+] [-] drag pinch'
       }
     }
   }

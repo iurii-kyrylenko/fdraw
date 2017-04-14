@@ -1,0 +1,17 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "Hosting fdraw",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": "v6.10.0"
+  },
+  "author": "Iurii Kyrylenko",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}

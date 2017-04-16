@@ -1,26 +1,3 @@
-const wb = (h) => {
-  let r, g, b, i, p, q
-  i = (h === 1) ? 6 : Math.floor(h * 7)
-  p = h * 7 - i
-  q = 1 - p
-  switch (i % 7) {
-    case 0: r = 1; g = q; b = 1; break
-    case 1: r = q; g = 0; b = 1; break
-    case 2: r = 0; g = p; b = 1; break
-    case 3: r = 0; g = 1; b = q; break
-    case 4: r = p; g = 1; b = 0; break
-    case 5: r = 1; g = q; b = 0; break
-    case 6: r = q; g = 0; b = 0; break
-    default: break
-  }
-  return {
-    r: Math.round(r * 255),
-    g: Math.round(g * 255),
-    b: Math.round(b * 255),
-    a: 255
-  }
-}
-
 /*
  * Quantization
  */
@@ -54,19 +31,34 @@ const lg = (h, bp) => {
   }
 }
 
-const wiki = (h) => {
-  const bp = [
-    { h: 0, r: 0, g: 7, b: 100 },
-    { h: 0.16, r: 32, g: 107, b: 203 },
-    { h: 0.42, r: 237, g: 255, b: 255 },
-    { h: 0.64, r: 255, g: 170, b: 0 },
-    { h: 0.86, r: 0, g: 2, b: 0 },
-    { h: 1, r: 0, g: 7, b: 100 }
-  ]
-  return lg(h, bp)
-}
+const bw = [
+  { h: 0, r: 255, g: 255, b: 255 },
+  { h: 1, r: 0, g: 0, b: 0 }
+]
+
+const rainbow = [
+  { h: 0.0, r: 255, g: 255, b: 255 },
+  { h: 0.1, r: 255, g: 0, b: 255 },
+  { h: 0.2, r: 0, g: 0, b: 255 },
+  { h: 0.3, r: 0, g: 255, b: 255 },
+  { h: 0.4, r: 0, g: 255, b: 0 },
+  { h: 0.6, r: 255, g: 255, b: 0 },
+  { h: 0.8, r: 255, g: 0, b: 0 },
+  { h: 1.0, r: 0, g: 0, b: 0 }
+]
+
+const wiki = [
+  { h: 0, r: 0, g: 7, b: 100 },
+  { h: 0.16, r: 32, g: 107, b: 203 },
+  { h: 0.42, r: 237, g: 255, b: 255 },
+  { h: 0.64, r: 255, g: 170, b: 0 },
+  { h: 0.86, r: 0, g: 2, b: 0 },
+  { h: 1, r: 0, g: 7, b: 100 }
+]
 
 export default {
-  wb,
-  wiki
+  bw,
+  rainbow,
+  wiki,
+  lg
 }

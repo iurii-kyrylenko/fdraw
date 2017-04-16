@@ -18,7 +18,7 @@
     mixins: [mixins],
     methods: {
       changeState (cb) {
-        const newValue = { ...this.$props.value, ...cb(this.$props.value) }
+        const newValue = { ...this.value, ...cb(this.value) }
         this.$emit('input', newValue)
       }
     },
@@ -28,7 +28,7 @@
       }
     },
     created () {
-      this.getState = () => this.$props.value
+      this.getState = () => this.value
     }
   }
 </script>

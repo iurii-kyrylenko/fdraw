@@ -14,14 +14,15 @@ self.onmessage = (e) => {
   const height = params.height
   const halfWidth = Math.floor(width / 2)
   const halfHeight = Math.floor(height / 2)
-  const maxIter = 300
+  const maxIter = params.resolution
+  const fcolor = (h) => getColor.lg(h, params.palette)
 
   for (let j = 0; j < height; j++) {
     for (let i = 0; i < width; i++) {
       const ii = 4 * (j * width + i)
       const cPoint = mapPoint(i - halfWidth, j - halfHeight, params)
       const nIter = iterations.mandelbrot(cPoint, maxIter)
-      const c = getColor.wiki(nIter / maxIter)
+      const c = fcolor(nIter / maxIter)
       imageData.data[ii + 0] = c.r
       imageData.data[ii + 1] = c.g
       imageData.data[ii + 2] = c.b

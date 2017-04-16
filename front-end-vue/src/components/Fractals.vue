@@ -1,10 +1,22 @@
 <template>
   <div class="container">
+  <!--
+    <fdraw-r :value="{ palette: 'wiki' }"></fdraw-r><br/>
+    <fdraw-r :value="{ resolution: 20, palette: [{h:0,r:255,g:255,b:0},{h:1,r:0,g:0,b:0}] }"></fdraw-r><br/>
+  -->
     <div class="fpanel">
       <input :value="params.width" @input="pushToImmutable('width', $event)" title="Width">
       <span>&times;</span>
       <input :value="params.height" @input="pushToImmutable('height', $event)" title="Height">
       <span class="info"><b>{{ drawing }}</b></span>
+      <br/>
+      <input :value="params.resolution" @input="pushToImmutable('resolution', $event)" title="Resolution">
+      <select :value="selectedPalette" @input="selectPalette" title="Palette">
+        <option disabled>Select palette</option>
+        <option value="bw">b&amp;w</option>
+        <option value="rainbow">rainbow</option>
+        <option value="wiki">wiki</option>
+      </select>
       <div class="info">x:&nbsp;&nbsp;&nbsp;&nbsp;{{ params.x }}</div>
       <div class="info">y:&nbsp;&nbsp;&nbsp;&nbsp;{{ params.y}}</div>
       <div class="info">zoom: {{ params.zoom }}</div>
@@ -17,6 +29,7 @@
 <script>
   import FdrawR from '@/fdraw/components/FdrawR'
   import FdrawRw from '@/fdraw/components/FdrawRw'
+  import getColor from '@/fdraw/services/getColor'
   export default {
     components: { FdrawR, FdrawRw },
     data: () => ({
@@ -25,11 +38,26 @@
         height: 440,
         x: -0.5,
         y: 0,
-        zoom: 150
+        zoom: 150,
+        resolution: 300,
+        palette: getColor.wiki
       },
       drawing: ''
     }),
+    computed: {
+      selectedPalette () {
+        switch (this.params.palette) {
+          case getColor.bw: return 'bw'
+          case getColor.rainbow: return 'rainbow'
+          case getColor.wiki: return 'wiki'
+        }
+      }
+    },
     methods: {
+      selectPalette (event) {
+        const palette = getColor[event.target.value]
+        this.params = { ...this.params, palette }
+      },
       pushToImmutable (key, event) {
         const n = +event.target.value
         if (!isNaN(n) && n > 0) {
@@ -47,7 +75,7 @@
   .fpanel {
     margin-bottom: 12px;
     width: 320px;
-    height: 90px;
+    height: 110px;
     border: 1px solid #ccc;
     box-shadow: 1px 1px 4px #eee;
     border-radius: 3px;

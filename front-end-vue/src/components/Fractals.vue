@@ -1,7 +1,7 @@
 <template>
   <div class="container">
   <!--
-    <fdraw-r :value="{ palette: 'wiki' }"></fdraw-r><br/>
+    <fdraw-r :value="{ palette: 'wk' }"></fdraw-r><br/>
     <fdraw-r :value="{ resolution: 20, palette: [{h:0,r:255,g:255,b:0},{h:1,r:0,g:0,b:0}] }"></fdraw-r><br/>
   -->
     <div class="fpanel">
@@ -12,10 +12,11 @@
       <br/>
       <input :value="params.resolution" @input="pushToImmutable('resolution', $event)" title="Resolution">
       <select :value="selectedPalette" @input="selectPalette" title="Palette">
-        <option disabled>Select palette</option>
+        <option disabled value="custom">Select palette</option>
         <option value="bw">b&amp;w</option>
-        <option value="rainbow">rainbow</option>
-        <option value="wiki">wiki</option>
+        <option value="wb">w&amp;b</option>
+        <option value="rb">rainbow</option>
+        <option value="wk">wiki</option>
       </select>
       <div class="info">x:&nbsp;&nbsp;&nbsp;&nbsp;{{ params.x }}</div>
       <div class="info">y:&nbsp;&nbsp;&nbsp;&nbsp;{{ params.y}}</div>
@@ -40,7 +41,11 @@
         y: 0,
         zoom: 150,
         resolution: 300,
-        palette: getColor.wiki
+        palette: [
+          { h: 0.0, r: 100, g: 0, b: 0 },
+          { h: 0.5, r: 255, g: 255, b: 0 },
+          { h: 1.0, r: 100, g: 0, b: 0 }
+        ]
       },
       drawing: ''
     }),
@@ -48,8 +53,10 @@
       selectedPalette () {
         switch (this.params.palette) {
           case getColor.bw: return 'bw'
-          case getColor.rainbow: return 'rainbow'
-          case getColor.wiki: return 'wiki'
+          case getColor.wb: return 'wb'
+          case getColor.rb: return 'rb'
+          case getColor.wk: return 'wk'
+          default: return 'custom'
         }
       }
     },

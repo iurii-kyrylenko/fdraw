@@ -27,6 +27,7 @@ export default {
 
     this.interactions = Interactions.create(this.$el, {
       move: (dx, dy) => {
+        if (!dx && !dy) return
         this.changeState(({ x, y, zoom: z }) => ({ x: x - dx / z, y: y + dy / z }))
       },
       zoomIn: () => {

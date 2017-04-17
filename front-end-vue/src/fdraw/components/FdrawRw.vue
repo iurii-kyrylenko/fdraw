@@ -23,7 +23,7 @@
       }
     },
     watch: {
-      value (value) {
+      value () {
         this.$nextTick(() => this.draw())
       }
     },

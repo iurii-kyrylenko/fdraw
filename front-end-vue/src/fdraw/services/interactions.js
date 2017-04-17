@@ -17,8 +17,10 @@ class Interactions {
   }
 
   onMouseUp (event) {
+    if (!this.cStart) return
     const cEnd = { x: event.clientX, y: event.clientY }
     this.actions.move(cEnd.x - this.cStart.x, cEnd.y - this.cStart.y)
+    this.cStart = null
   }
 
   onKeyDown (event) {

@@ -5,13 +5,13 @@
     <fdraw-r :value="{ resolution: 20, palette: [{h:0,r:255,g:255,b:0},{h:1,r:0,g:0,b:0}] }"></fdraw-r><br/>
   -->
     <div class="fpanel">
-      <input :value="params.width" @input="pushToImmutable('width', $event)" title="Width">
+      <input :value="params.width" @change="pushToImmutable('width', $event)" title="Width">
       <span>&times;</span>
-      <input :value="params.height" @input="pushToImmutable('height', $event)" title="Height">
+      <input :value="params.height" @change="pushToImmutable('height', $event)" title="Height">
       <span class="info"><b>{{ drawing }}</b></span>
       <br/>
-      <input :value="params.resolution" @input="pushToImmutable('resolution', $event)" title="Resolution">
-      <select :value="selectedPalette" @input="selectPalette" title="Palette">
+      <input :value="params.resolution" @change="pushToImmutable('resolution', $event)" title="Resolution">
+      <select :value="selectedPalette" @change="selectPalette" title="Palette">
         <option disabled value="custom">Select palette</option>
         <option value="bw">b&amp;w</option>
         <option value="wb">w&amp;b</option>

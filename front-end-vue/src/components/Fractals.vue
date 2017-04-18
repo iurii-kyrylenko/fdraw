@@ -1,9 +1,12 @@
 <template>
   <div class="container">
-  <!--
-    <fdraw-r :value="{ palette: 'wk' }"></fdraw-r><br/>
-    <fdraw-r :value="{ resolution: 20, palette: [{h:0,r:255,g:255,b:0},{h:1,r:0,g:0,b:0}] }"></fdraw-r><br/>
-  -->
+<!--
+    <fdraw-r class="bottom-span" :value="{ palette: 'wk' }"></fdraw-r>
+    <fdraw-r class="bottom-span"
+             :value="{ resolution: 20, palette: [{h:0,r:255,g:255,b:0},{h:1,r:0,g:0,b:0}] }">
+    </fdraw-r>
+-->
+    <div class="title bottom-span">Tools:</div>
     <div class="fpanel">
       <input :value="params.width" @change="pushToImmutable('width', $event)" title="Width">
       <span>&times;</span>
@@ -23,31 +26,33 @@
       <div class="info">zoom: {{ params.zoom }}</div>
     </div>
 
-    <fdraw-rw v-model="params" @progress="progress"></fdraw-rw>
+    <div class="title top-span">Color map:</div>
+    <fdraw-rw class="top-span" v-model="params" @progress="progress" @stat="stat=$event"></fdraw-rw>
+
+    <div class="title top-span">Spectrum:</div>
+    <fchart class="top-span" :stat="stat" width="324" height="120" span="0.2"></fchart>
   </div>
 </template>
 
 <script>
   import FdrawR from '@/fdraw/components/FdrawR'
   import FdrawRw from '@/fdraw/components/FdrawRw'
+  import FChart from '@/fdraw/components/FChart'
   import getColor from '@/fdraw/services/getColor'
   export default {
-    components: { FdrawR, FdrawRw },
+    components: { FdrawR, FdrawRw, 'fchart': FChart },
     data: () => ({
       params: {
         width: 320,
         height: 440,
-        x: -0.5,
-        y: 0,
-        zoom: 150,
+        x: -1.37215516,
+        y: 0.0109641665,
+        zoom: 498788,
         resolution: 300,
-        palette: [
-          { h: 0.0, r: 100, g: 0, b: 0 },
-          { h: 0.5, r: 255, g: 255, b: 0 },
-          { h: 1.0, r: 100, g: 0, b: 0 }
-        ]
+        palette: getColor.wk
       },
-      drawing: ''
+      drawing: '',
+      stat: []
     }),
     computed: {
       selectedPalette () {
@@ -79,8 +84,16 @@
 </script>
 
 <style scoped>
+  .title {
+    font-family: monospace;
+  }
+  .top-span {
+    margin-top: 10px;
+  }
+  .bottom-span {
+    margin-bottom: 10px;
+  }
   .fpanel {
-    margin-bottom: 12px;
     width: 320px;
     height: 110px;
     border: 1px solid #ccc;
@@ -96,7 +109,7 @@
   }
   .fpanel > .info {
     margin-left: 16px;
-    font-family: Courier New;
+    font-family: monospace;
     font-size: 0.8em;
   }
 </style>

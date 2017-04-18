@@ -17,12 +17,18 @@ self.onmessage = (e) => {
   const maxIter = params.resolution
   const fcolor = (h) => getColor.lg(h, params.palette)
 
+  const N = 50
+  let stat = new Array(N).fill(0)
+
   for (let j = 0; j < height; j++) {
     for (let i = 0; i < width; i++) {
       const ii = 4 * (j * width + i)
       const cPoint = mapPoint(i - halfWidth, j - halfHeight, params)
       const nIter = iterations.mandelbrot(cPoint, maxIter)
-      const c = fcolor(nIter / maxIter)
+      const h = nIter / maxIter
+      const c = fcolor(h)
+      const n = Math.floor((N - 1) * h)
+      stat[n]++
       imageData.data[ii + 0] = c.r
       imageData.data[ii + 1] = c.g
       imageData.data[ii + 2] = c.b
@@ -30,5 +36,8 @@ self.onmessage = (e) => {
     }
   }
 
-  postMessage({ image: imageData })
+  let max = stat.reduce((m, x) => (x > m) ? x : m, 0)
+  stat = stat.map(x => x / max)
+
+  postMessage({ image: imageData, stat })
 }

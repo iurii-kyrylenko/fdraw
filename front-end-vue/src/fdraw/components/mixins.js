@@ -21,6 +21,8 @@ export default {
       const context = this.$el.getContext('2d')
       context.putImageData(e.data.image, 0, 0)
 
+      this.$emit('stat', e.data.stat)
+
       this.interactions.bind()
       this.$emit('progress', false)
     }

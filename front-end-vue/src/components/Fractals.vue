@@ -30,7 +30,7 @@
     <fdraw-rw class="top-span" v-model="params" @progress="progress" @stat="stat=$event"></fdraw-rw>
 
     <div class="title top-span">Spectrum:</div>
-    <fchart class="top-span" :stat="stat" width="324" height="120" span="0.2"></fchart>
+    <fchart class="top-span" :stat="stat" width="324" height="120" span="0.2" :palette="palette"></fchart>
   </div>
 </template>
 
@@ -52,7 +52,8 @@
         palette: getColor.wk
       },
       drawing: '',
-      stat: []
+      stat: [],
+      palette: getColor.wk
     }),
     computed: {
       selectedPalette () {
@@ -69,6 +70,7 @@
       selectPalette (event) {
         const palette = getColor[event.target.value]
         this.params = { ...this.params, palette }
+        this.palette = palette
       },
       pushToImmutable (key, event) {
         const n = +event.target.value
